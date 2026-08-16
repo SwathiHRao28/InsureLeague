@@ -6,31 +6,39 @@ type CookieToSet = { name: string; value: string; options?: CookieOptionsWithNam
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet: CookieToSet[]) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-          response = NextResponse.next({ request });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
-        },
-      },
+  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
+  const isLoginRoute = request.nextUrl.pathname === "/admin/login";
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // Missing config would otherwise throw and crash every /admin request — fail closed instead.
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error("Middleware: missing Supabase env vars, blocking admin access");
+    if (isAdminRoute && !isLoginRoute) {
+      return NextResponse.redirect(new URL("/admin/login", request.url));
     }
-  );
+    return response;
+  }
+
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll(cookiesToSet: CookieToSet[]) {
+        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+        response = NextResponse.next({ request });
+        cookiesToSet.forEach(({ name, value, options }) =>
+          response.cookies.set(name, value, options)
+        );
+      },
+    },
+  });
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
-  const isLoginRoute = request.nextUrl.pathname === "/admin/login";
 
   // Protect every /admin route except the login page itself.
   if (isAdminRoute && !isLoginRoute && !user) {
@@ -46,6 +54,7 @@ export async function middleware(request: NextRequest) {
 
   return response;
 }
+
 
 export const config = {
   matcher: ["/admin/:path*"],
