@@ -11,6 +11,8 @@ import {
   FileText,
   PersonStanding,
   HeartPulse,
+  FileCheck,
+  PiggyBank,
   ArrowRight,
   type LucideIcon,
 } from "lucide-react";
@@ -25,6 +27,8 @@ const iconMap: Record<NavIconName, LucideIcon> = {
   FileText,
   PersonStanding,
   HeartPulse,
+  FileCheck,
+  PiggyBank,
 };
 
 export function NavDropdown({ group }: { group: NavGroup }) {

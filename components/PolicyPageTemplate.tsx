@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Product } from "@/data/products";
 import retirement8 from "@/images/8.jpeg";
 import healthImage from "@/images/9.jpeg";
@@ -24,21 +24,23 @@ const productBackgrounds: Record<string, StaticImageData[]> = {
 
 export function PolicyPageTemplate({ product }: { product: Product }) {
   const overviewBullets = product.features.slice(0, 4).map((feature) => feature.title);
+  const whoItsForHeading = product.whoItsForHeading ?? "Who it protects";
+  const featuresHeading = product.featuresHeading ?? "What it can cover";
 
   return (
     <div>
-      <section className="pt-10 pb-4">
+      <section className="pb-4 pt-10">
         <div className="container-page">
           <div className="overflow-hidden rounded-[2rem] bg-white p-5 shadow-[0_40px_120px_rgba(15,23,42,0.08)]">
-            <div className="grid gap-4 lg:grid-cols-[1.35fr_0.95fr] items-center">
-              <div className="space-y-4 max-w-3xl">
+            <div className="grid items-center gap-4 lg:grid-cols-[1.35fr_0.95fr]">
+              <div className="max-w-3xl space-y-4">
                 <p className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">
                   {product.category === "corporate" ? "Corporate Insurance" : "Individual Insurance"}
                 </p>
                 <h1 className="text-5xl font-semibold tracking-tight text-slate-950 sm:text-6xl">
                   {product.name}
                 </h1>
-                <p className="text-lg leading-relaxed text-slate-600">{product.tagline}</p>
+                {product.tagline ? <p className="text-lg leading-relaxed text-slate-600">{product.tagline}</p> : null}
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/consultation"
@@ -56,22 +58,22 @@ export function PolicyPageTemplate({ product }: { product: Product }) {
               </div>
 
               {productBackgrounds[product.slug]?.[0] ? (
-  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[2rem] bg-slate-100">
-    <Image
-      src={productBackgrounds[product.slug][0]}
-      alt={product.name}
-      fill
-      className="object-cover"
-      priority
-    />
-  </div>
-) : null}
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[2rem] bg-slate-100">
+                  <Image
+                    src={productBackgrounds[product.slug][0]}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="pt-0 pb-16 sm:pb-20 lg:pb-24">
+      <section className="pb-16 pt-0 sm:pb-20 lg:pb-24">
         <div className="container-page">
           <div className="grid gap-4 lg:grid-cols-3">
             <div className="rounded-[2rem] border border-border bg-white p-6">
@@ -86,7 +88,7 @@ export function PolicyPageTemplate({ product }: { product: Product }) {
               <div className="mb-4 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.35em] text-primary">
                 <span className="inline-flex h-2.5 w-8 rounded-full bg-primary" />02
               </div>
-              <h3 className="text-xl font-semibold text-slate-950">Who it protects</h3>
+              <h3 className="text-xl font-semibold text-slate-950">{whoItsForHeading}</h3>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-600">
                 {product.whoItsFor.map((item) => (
                   <li key={item} className="flex items-start gap-3">
@@ -101,7 +103,7 @@ export function PolicyPageTemplate({ product }: { product: Product }) {
               <div className="mb-4 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.35em] text-primary">
                 <span className="inline-flex h-2.5 w-8 rounded-full bg-primary" />03
               </div>
-              <h3 className="text-xl font-semibold text-slate-950">What it can cover</h3>
+              <h3 className="text-xl font-semibold text-slate-950">{featuresHeading}</h3>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-600">
                 {overviewBullets.map((bullet) => (
                   <li key={bullet} className="flex items-start gap-3">
@@ -142,42 +144,34 @@ export function PolicyPageTemplate({ product }: { product: Product }) {
             <h2 className="text-2xl">Overview</h2>
             <p className="mt-4 leading-relaxed text-muted-foreground">{product.summary}</p>
 
-            <h2 className="mt-12 text-2xl">Key features</h2>
+            <h2 className="mt-12 text-2xl">{featuresHeading}</h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
-              {product.features.map((f) => (
-                <div key={f.title} className="rounded-2xl border border-border p-5">
-                  <h3 className="text-base font-semibold text-foreground">{f.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.description}</p>
+              {product.features.map((feature) => (
+                <div key={feature.title} className="rounded-2xl border border-border p-5">
+                  <h3 className="text-base font-semibold text-foreground">{feature.title}</h3>
+                  {feature.description ? <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{feature.description}</p> : null}
                 </div>
               ))}
             </div>
 
-            <h2 className="mt-12 text-2xl">Frequently asked questions</h2>
-            <div className="mt-6 space-y-4">
-              {product.faqs.map((faq) => (
-                <div key={faq.question} className="rounded-2xl bg-muted p-5">
-                  <h3 className="text-sm font-semibold text-foreground">{faq.question}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
+            {product.faqs.length > 0 ? (
+              <>
+                <h2 className="mt-12 text-2xl">Frequently asked questions</h2>
+                <div className="mt-6 space-y-4">
+                  {product.faqs.map((faq) => (
+                    <div key={faq.question} className="rounded-2xl bg-muted p-5">
+                      <h3 className="text-sm font-semibold text-foreground">{faq.question}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            ) : null}
           </div>
 
-          <aside className="space-y-10">
+          <aside className="space-y-6">
             <div className="rounded-2xl border border-border p-6">
-              <h3 className="text-base font-semibold text-foreground">Highlights</h3>
-              <ul className="mt-4 space-y-3">
-                {product.heroPoints.map((point) => (
-                  <li key={point} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rounded-2xl border border-border p-6">
-              <h3 className="text-base font-semibold text-foreground">Who it&apos;s for</h3>
+              <h3 className="text-base font-semibold text-foreground">{whoItsForHeading}</h3>
               <ul className="mt-4 space-y-2.5">
                 {product.whoItsFor.map((who) => (
                   <li key={who} className="text-sm text-muted-foreground">

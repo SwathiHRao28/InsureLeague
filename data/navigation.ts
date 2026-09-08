@@ -6,7 +6,9 @@ export type NavIconName =
   | "HardHat"
   | "FileText"
   | "PersonStanding"
-  | "HeartPulse";
+  | "HeartPulse"
+  | "FileCheck"
+  | "PiggyBank";
 
 export interface NavItem {
   label: string;
@@ -24,7 +26,7 @@ export const corporateNav: NavGroup = {
   label: "Corporate",
   seeAllHref: "/corporate",
   items: [
-    { label: "Keyman Insurance", href: "/corporate/keyman-insurance", icon: "Shield" },
+    { label: "Key Man Insurance", href: "/corporate/keyman-insurance", icon: "Shield" },
     {
       label: "Director's Liability Insurance",
       href: "/corporate/directors-liability-insurance",
@@ -41,6 +43,8 @@ export const corporateNav: NavGroup = {
       icon: "Lock",
     },
     { label: "Project Insurance", href: "/corporate/project-insurance", icon: "HardHat" },
+    { label: "Surety Bonds", href: "/corporate/surety-bonds", icon: "FileCheck" },
+    { label: "Gratuity Investments", href: "/corporate/gratuity-investments", icon: "PiggyBank" },
   ],
 };
 
@@ -79,11 +83,13 @@ export const insuranceCategoryOptions = [
 
 export const insuranceProductOptions: Record<string, { value: string; label: string }[]> = {
   corporate: [
-    { value: "keyman-insurance", label: "Keyman Insurance" },
+    { value: "keyman-insurance", label: "Key Man Insurance" },
     { value: "directors-liability-insurance", label: "Director's Liability Insurance" },
     { value: "employer-employee-insurance", label: "Employer Employee Insurance" },
     { value: "cybersecurity-insurance", label: "Cybersecurity Insurance" },
     { value: "project-insurance", label: "Project Insurance" },
+    { value: "surety-bonds", label: "Surety Bonds" },
+    { value: "gratuity-investments", label: "Gratuity Investments" },
   ],
   individual: [
     { value: "term-plans", label: "Term Plans" },

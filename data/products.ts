@@ -1,17 +1,18 @@
 export interface ProductFeature {
   title: string;
-  description: string;
+  description?: string;
 }
 
 export interface Product {
   slug: string;
   category: "corporate" | "individual";
   name: string;
-  tagline: string;
+  tagline?: string;
   summary: string;
-  heroPoints: string[];
   features: ProductFeature[];
+  featuresHeading?: string;
   whoItsFor: string[];
+  whoItsForHeading?: string;
   faqs: { question: string; answer: string }[];
 }
 
@@ -19,30 +20,14 @@ export const corporateProducts: Product[] = [
   {
     slug: "keyman-insurance",
     category: "corporate",
-    name: "Keyman Insurance",
+    name: "Key Man Insurance",
     tagline: "Protect your business against the loss of critical talent.",
     summary:
-      "Keyman Insurance safeguards your company's financial stability if a key employee, founder, or director is unable to work due to death or critical illness.",
-    heroPoints: [
-      "Covers financial loss from losing key personnel",
-      "Premiums may be tax-deductible as a business expense",
-      "Flexible sum assured based on the individual's contribution to revenue",
-    ],
-    features: [
-      {
-        title: "Business continuity",
-        description: "Provides funds to cover revenue loss, recruitment, and training of a replacement.",
-      },
-      {
-        title: "Creditor confidence",
-        description: "Reassures lenders and investors that the business can withstand key-person risk.",
-      },
-      {
-        title: "Flexible structuring",
-        description: "Can be structured as term or whole-of-life cover depending on business needs.",
-      },
-    ],
-    whoItsFor: ["Founders and promoters", "Companies reliant on a specific technical expert", "Family businesses with a single key decision-maker"],
+      "Key Man Insurance Safeguard's corporate revenue and stability against the loss of key personnel, founders, or directors with Keyman Insurance.",
+    featuresHeading: "Benefits to the Business",
+    features: [{ title: "Financial security" }, { title: "Business continuity" }, { title: "Helps in talent retention" }],
+    whoItsForHeading: "Who is a Key Man",
+    whoItsFor: ["Director", "Promoter", "Business Owner", "Any person critical to business operations and growth"],
     faqs: [
       {
         question: "Who owns a Keyman Insurance policy?",
@@ -50,7 +35,7 @@ export const corporateProducts: Product[] = [
       },
       {
         question: "Is the premium tax-deductible?",
-        answer: "In many cases yes, subject to conditions under the Income Tax Act — we'll help you confirm eligibility with your CA.",
+        answer: "Premium payments are treated as allowable business expenses pursuant to Section 34, Income Tax Act 2025",
       },
     ],
   },
@@ -58,24 +43,20 @@ export const corporateProducts: Product[] = [
     slug: "directors-liability-insurance",
     category: "corporate",
     name: "Director's Liability Insurance",
-    tagline: "Shield your leadership from personal financial exposure.",
     summary:
-      "Directors & Officers (D&O) Liability Insurance protects directors and senior officers from personal losses if sued for actual or alleged wrongful acts while managing the company.",
-    heroPoints: [
-      "Covers legal defence costs and settlements",
-      "Protects personal assets of directors and officers",
-      "Essential for companies raising external capital",
-    ],
+      "Directors & Officers (D&O) Liability policies are designed to respond to claims arising from alleged or actual wrongful acts in a managerial capacity.",
+    featuresHeading: "What it will cover",
     features: [
-      { title: "Legal defence cost cover", description: "Pays for legal representation in regulatory and shareholder actions." },
-      { title: "Personal asset protection", description: "Shields directors' personal wealth from claims arising from company decisions." },
-      { title: "Regulatory investigation cover", description: "Extends to costs incurred during SEBI, MCA or other regulatory inquiries." },
+      { title: "Legal Defence Costs" },
+      { title: "Settlements / Damages, Subject to policy terms" },
+      { title: "Personal Liability of Directors & Officers" },
     ],
-    whoItsFor: ["Listed and soon-to-be-listed companies", "Startups with institutional investors", "Non-profit and society board members"],
+    whoItsForHeading: "Who it Protects",
+    whoItsFor: ["Directors, Promoters", "Key Managerial Personnel, CXO's", "Senior Officers"],
     faqs: [
       {
         question: "Does D&O cover fraud?",
-        answer: "Deliberate fraud is typically excluded, but the policy covers legal costs until fraud is proven in a final adjudication.",
+        answer: "D&O insurance can defend a director against an allegation of fraud, but it cannot be used to insure the consequences of fraud that is proven.",
       },
     ],
   },
@@ -83,44 +64,37 @@ export const corporateProducts: Product[] = [
     slug: "employer-employee-insurance",
     category: "corporate",
     name: "Employer Employee Insurance",
-    tagline: "A tax-efficient way to reward and retain your best people.",
     summary:
-      "A life insurance policy where the employer pays premiums on behalf of an employee, used as a retention and reward tool with tax advantages for both parties.",
-    heroPoints: [
-      "Boosts employee retention for key roles",
-      "Structured for tax efficiency for employer and employee",
-      "Ownership can be transferred to the employee after a vesting period",
-    ],
+      "A life insurance policy where the employer pays premiums on behalf of an employee, used as a retention and reward tool with tax advantages for the employer.",
+    featuresHeading: "How it helps",
     features: [
-      { title: "Retention tool", description: "Long vesting periods encourage employees to stay with the company." },
-      { title: "Tax efficiency", description: "Premiums may qualify as a business expense; payouts can be tax-advantaged for the employee." },
-      { title: "Customisable vesting", description: "Design vesting schedules aligned to your retention strategy." },
+      { title: "Companies rewarding senior leadership" },
+      { title: "Benefits Employer by retaining the senior leadership" },
+      { title: "Senior Leadership are benefitted from the returns of the policy" },
     ],
-    whoItsFor: ["Companies rewarding senior leadership", "Family businesses transitioning ownership", "High-growth companies competing for talent"],
-    faqs: [
-      { question: "Who pays the premium?", answer: "The employer pays the premium on behalf of the employee as part of their compensation structure." },
-    ],
+    whoItsForHeading: "Who can be given",
+    whoItsFor: ["Senior Executives", "Business - Critical Personnel", "Promoters / Directors where eligible"],
+    faqs: [{ question: "Who pays the premium?", answer: "The employer pays the premium on behalf of the employee as part of their compensation structure." }],
   },
   {
     slug: "cybersecurity-insurance",
     category: "corporate",
     name: "Cybersecurity Insurance",
     tagline: "Financial protection against data breaches and cyberattacks.",
-    summary:
-      "Covers the costs of responding to data breaches, ransomware, business interruption from cyberattacks, and third-party liability from data loss.",
-    heroPoints: [
-      "First-party costs: forensics, notification, PR",
-      "Third-party liability from data breaches",
-      "Business interruption from system downtime",
-    ],
+    summary: "Cyber insurance protects a business against financial losses arising from cyber incidents, subject to the policy terms.",
+    featuresHeading: "What it covers",
     features: [
-      { title: "Incident response", description: "Covers forensic investigation, legal counsel, and customer notification costs." },
-      { title: "Ransomware cover", description: "Financial support for ransom negotiation and system recovery." },
-      { title: "Regulatory fines", description: "Cover for defence costs and, where insurable, fines under data protection laws." },
+      { title: "Incident response & forensic investigation" },
+      { title: "Ransomware" },
+      { title: "Business interruption etc" },
     ],
-    whoItsFor: ["E-commerce and fintech companies", "Companies handling customer PII", "SaaS businesses with cloud infrastructure"],
+    whoItsForHeading: "Who needs it",
+    whoItsFor: ["IT & Software Companies", "Manufacturers", "MSME's, Mid Sized & Large Corporates"],
     faqs: [
-      { question: "Does this cover ransomware payments?", answer: "Many policies include ransomware cover as an add-on — we'll match you to a policy that fits your risk profile." },
+      {
+        question: "Does this cover ransomware payments?",
+        answer: "Ransomware can be insured, but only when Cyber Extortion/Ransomware cover is specifically included in the policy.",
+      },
     ],
   },
   {
@@ -129,21 +103,38 @@ export const corporateProducts: Product[] = [
     name: "Project Insurance",
     tagline: "Comprehensive cover for construction and infrastructure projects.",
     summary:
-      "Protects contractors, developers, and project owners against physical loss, damage, and third-party liability during the course of a construction or infrastructure project.",
-    heroPoints: [
-      "Covers physical damage during construction",
-      "Third-party liability at the project site",
-      "Delay-in-start-up cover available",
+      "A financial safety net for projects against unexpected physical loss, damage and certain liabilities during the project period.",
+    featuresHeading: "What it will cover",
+    features: [{ title: "Protect the Project." }, { title: "Protect the Investment." }, { title: "Protect the Completion." }],
+    whoItsForHeading: "Who needs it",
+    whoItsFor: ["Infrastructure projects", "Construction companies", "Engineering & installation contractors etc"],
+    faqs: [{ question: "Can cover be arranged for a single project?", answer: "Yes — project-specific policies are common and are tailored to project duration and value." }],
+  },
+  {
+    slug: "surety-bonds",
+    category: "corporate",
+    name: "Surety Bonds",
+    summary: "Releases your working capital. No need to invest in properties. No need to have Bank guarantees.",
+    featuresHeading: "What it will cover",
+    features: [],
+    whoItsForHeading: "Who needs it",
+    whoItsFor: [
+      "Infrastructure companies",
+      "Companies bidding for NHAI, Railway, BBMP and other government projects",
+      "Companies with BBB+ rating",
     ],
-    features: [
-      { title: "All-risk construction cover", description: "Protects against fire, flood, and accidental damage on site." },
-      { title: "Third-party liability", description: "Covers injury or property damage claims from the public during construction." },
-      { title: "Advance loss of profit", description: "Optional cover for delayed project completion and revenue impact." },
-    ],
-    whoItsFor: ["Real estate developers", "EPC and infrastructure contractors", "Project finance lenders requiring cover as a condition"],
-    faqs: [
-      { question: "Can cover be arranged for a single project?", answer: "Yes — project-specific policies are common and are tailored to project duration and value." },
-    ],
+    faqs: [],
+  },
+  {
+    slug: "gratuity-investments",
+    category: "corporate",
+    name: "Gratuity Investments",
+    summary: "Reduces liquidity problem in case of gratuity settlement. Generates a nominal interest income between 6 - 7 % *. * Conditions apply.",
+    featuresHeading: "What it will cover",
+    features: [{ title: "Investment of gratuity liability" }, { title: "Partial or full investment" }],
+    whoItsForHeading: "Who needs it",
+    whoItsFor: ["Any company with more than 10 employees"],
+    faqs: [],
   },
 ];
 
@@ -155,19 +146,19 @@ export const individualProducts: Product[] = [
     tagline: "Build a reliable income stream for your golden years.",
     summary:
       "Retirement and pension plans help you accumulate a corpus during your working years and convert it into a steady income after retirement.",
-    heroPoints: [
-      "Disciplined, long-term wealth accumulation",
-      "Guaranteed or market-linked annuity options",
-      "Tax benefits on contributions",
-    ],
+    featuresHeading: "Benefits",
     features: [
-      { title: "Corpus accumulation", description: "Systematic contributions grow through the accumulation phase." },
-      { title: "Annuity choices", description: "Choose immediate or deferred annuity, with options for spousal continuation." },
-      { title: "Inflation-aware planning", description: "We help you model a corpus that accounts for inflation over your retirement horizon." },
+      { title: "Monthly / Quarterly / Half Yearly / Yearly Returns" },
+      { title: "Non Taxable upto 5 Lakhs investment" },
+      { title: "Fixed Guaranteed Returns - Protection from market linked volatility" },
     ],
-    whoItsFor: ["Individuals 10+ years from retirement", "Self-employed professionals without EPF", "Anyone wanting a guaranteed post-retirement income"],
+    whoItsForHeading: "Who requires it",
+    whoItsFor: ["Earning member above 35+ Years", "Self employed above 35+ Years", "Retired Individuals"],
     faqs: [
-      { question: "When should I start a retirement plan?", answer: "The earlier the better — starting in your 30s significantly reduces the monthly contribution needed for the same retirement corpus." },
+      {
+        question: "When should I start a retirement plan?",
+        answer: "Starting by 35+ Years age allows your money more time to grow, helping you build your desired retirement corpus with lower contributions.",
+      },
     ],
   },
   {
@@ -177,19 +168,19 @@ export const individualProducts: Product[] = [
     tagline: "Pure protection for your family's financial future.",
     summary:
       "A term plan provides a large life cover at an affordable premium, ensuring your family stays financially secure in your absence.",
-    heroPoints: [
-      "High cover at low premium",
-      "Optional riders for critical illness and accidental death",
-      "Flexible payout options — lump sum or monthly income",
-    ],
+    featuresHeading: "Benefits",
     features: [
-      { title: "Pure protection", description: "No maturity benefit — 100% of the premium goes toward protecting your family." },
-      { title: "Rider flexibility", description: "Add critical illness, accidental death, or waiver of premium riders." },
-      { title: "Tax benefits", description: "Premiums qualify for deduction under Section 80C; payouts are tax-free under Section 10(10D)." },
+      { title: "Death cover" },
+      { title: "Critical illness, Waiver of Premium, Return of Premium, Accidental Death etc" },
+      { title: "Death Benefit received by nominee is tax free" },
     ],
-    whoItsFor: ["Primary earners with dependents", "Individuals with home or business loans", "Young professionals starting a family"],
+    whoItsForHeading: "Who needs it",
+    whoItsFor: ["Salaried Individuals", "Business Owners & Self employed professionals", "Primary income earners"],
     faqs: [
-      { question: "How much cover do I need?", answer: "A common rule of thumb is 10–15x your annual income, adjusted for liabilities and future goals — we'll help you calculate the right number." },
+      {
+        question: "How much cover do I need?",
+        answer: "A common benchmark is 15–25× annual income, tailored to your age, liabilities, dependants, and future financial goals. We help you determine the right level of cover.",
+      },
     ],
   },
   {
@@ -199,11 +190,6 @@ export const individualProducts: Product[] = [
     tagline: "Comprehensive protection against rising medical costs.",
     summary:
       "Health insurance covers hospitalisation, treatment, and related medical expenses, protecting your savings from unexpected healthcare costs.",
-    heroPoints: [
-      "Cashless treatment at a wide hospital network",
-      "Family floater and individual plan options",
-      "Cover for pre-existing conditions after waiting period",
-    ],
     features: [
       { title: "Cashless hospitalisation", description: "Wide network of hospitals for cashless treatment across India." },
       { title: "Family floater options", description: "A single sum insured shared across the family for cost efficiency." },

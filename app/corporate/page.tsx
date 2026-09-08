@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, Shield, UserCheck, Users, Lock, HardHat } from "lucide-react";
+import { ArrowRight, Shield, UserCheck, Users, Lock, HardHat, FileCheck, PiggyBank } from "lucide-react";
 import { corporateProducts } from "@/data/products";
 import corporateHero from "@/images/1.jpeg";
 
@@ -10,13 +10,15 @@ export const metadata: Metadata = {
   description: "Insurance solutions for businesses — Keyman, D&O, Employer-Employee, Cyber, and Project insurance.",
 };
 
-const icons = { Shield, UserCheck, Users, Lock, HardHat };
+const icons = { Shield, UserCheck, Users, Lock, HardHat, FileCheck, PiggyBank };
 const iconBySlug: Record<string, keyof typeof icons> = {
   "keyman-insurance": "Shield",
   "directors-liability-insurance": "UserCheck",
   "employer-employee-insurance": "Users",
   "cybersecurity-insurance": "Lock",
   "project-insurance": "HardHat",
+  "surety-bonds": "FileCheck",
+  "gratuity-investments": "PiggyBank",
 };
 
 export default function CorporatePage() {
@@ -53,7 +55,7 @@ export default function CorporatePage() {
                   <Icon className="h-5 w-5" />
                 </span>
                 <h2 className="mt-4 text-lg font-semibold text-foreground">{product.name}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{product.tagline}</p>
+                {product.tagline ? <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{product.tagline}</p> : null}
                 <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
                   Learn more{" "}
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />

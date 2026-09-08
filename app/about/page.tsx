@@ -7,9 +7,9 @@ export const metadata: Metadata = {
 };
 
 const values = [
-  { icon: ShieldCheck, title: "Independence", description: "We are not tied to a single insurer — recommendations are based on your needs, not commissions." },
-  { icon: Target, title: "Precision", description: "Every recommendation is backed by a risk assessment specific to your situation." },
-  { icon: Users, title: "Long-term relationships", description: "We stay with clients through renewals, claims, and life changes — not just the first sale." },
+  { icon: ShieldCheck, title: "Independence", description: "We have partnered with 12 top insurance companies in India" },
+  { icon: Target, title: "Precision", description: "Tailor made solution for every client" },
+  { icon: Users, title: "Long-term relationships", description: "We provide dedicated support through every renewal, claim, and major milestone, ensuring value far beyond the initial sale." },
 ];
 
 export default function AboutPage() {
@@ -17,7 +17,7 @@ export default function AboutPage() {
     <div>
       <section className="bg-accent/50 section-padding">
         <div className="container-page">
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary">About InsureLeague</p>
+          <p className="text-sm font-semibold tracking-wide text-primary">About InsureLeague</p>
           <h1 className="mt-3 max-w-2xl text-4xl sm:text-5xl">Independent insurance advisory, built on trust.</h1>
           <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
             InsureLeague is an IRDAI-approved insurance marketing firm helping businesses and
@@ -32,10 +32,10 @@ export default function AboutPage() {
           <div>
             <h2 className="text-3xl">Our approach</h2>
             <p className="mt-4 leading-relaxed text-muted-foreground">
-              We start every engagement with a risk assessment, not a product pitch. Whether
-              you&apos;re a business protecting key personnel or a family planning for the future,
-              our advisors compare offerings across our panel of insurers to find the plan that
-              actually fits — and we stay involved through renewals and claims.
+              We start with a risk assessment, not a product pitch. Whether you are protecting key
+              business personnel or planning for your family&apos;s future, our advisors analyze options
+              across a premium panel of insurers to find your exact fit. Our partnership does not end
+              at checkout—we provide dedicated, ongoing support through every renewal and claim.
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-1">

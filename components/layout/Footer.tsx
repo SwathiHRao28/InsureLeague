@@ -68,14 +68,22 @@ export function Footer() {
           <ul className="mt-4 space-y-3">
             <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
               <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              <a href="tel:+911234567890" className="hover:text-primary">
-                +91 12345 67890
-              </a>
+              <div className="space-y-1">
+                <a href="tel:+919845231663" className="block hover:text-primary">
+                  98452 31663
+                </a>
+                <a href="tel:+919900600661" className="block hover:text-primary">
+                  99006 00661
+                </a>
+                <a href="tel:+918023560205" className="block hover:text-primary">
+                  080 - 2356 0205
+                </a>
+              </div>
             </li>
             <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
               <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              <a href="mailto:hello@insureleague.com" className="hover:text-primary">
-                hello@insureleague.com
+              <a href="mailto:info@insureleague.com" className="hover:text-primary">
+                info@insureleague.com
               </a>
             </li>
             <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
@@ -86,7 +94,8 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="hover:text-primary"
               >
-                10/106, 10th Main, 11th A Cross Rd, Malleshwaram, Bengaluru, Karnataka 560003
+                Infinite Basket Insurance Marketing P Ltd, 10/106, 10th Main, 11th A Cross Rd,
+                Malleshwaram, Bengaluru - 560 003 - Karnataka
               </a>
             </li>
           </ul>

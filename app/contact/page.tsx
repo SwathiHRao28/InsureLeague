@@ -7,18 +7,20 @@ export const metadata: Metadata = {
   description: "Get in touch with InsureLeague for corporate or individual insurance advisory.",
 };
 
-const OFFICE_ADDRESS = "10/106, 10th Main, 11th A Cross Rd, Malleshwaram, Bengaluru, Karnataka 560003";
+const OFFICE_ADDRESS =
+  "Infinite Basket Insurance Marketing P Ltd, 10/106, 10th Main, 11th A Cross Rd, Malleshwaram, Bengaluru - 560 003 - Karnataka";
 const MAPS_EMBED_URL =
   "https://www.google.com/maps?q=" + encodeURIComponent(OFFICE_ADDRESS) + "&output=embed";
 const MAPS_LINK = "https://maps.app.goo.gl/wL4PTLL2TmEDZHPf6";
 
 const details = [
-  { icon: Phone, label: "Phone", value: "+91 12345 67890", href: "tel:+911234567890" },
-  { icon: Mail, label: "Email", value: "hello@insureleague.com", href: "mailto:hello@insureleague.com" },
+  { icon: Phone, label: "Phone", value: "98452 31663", href: "tel:+919845231663" },
+  { icon: Phone, label: "Phone", value: "99006 00661", href: "tel:+919900600661" },
+  { icon: Phone, label: "Phone", value: "080 - 2356 0205", href: "tel:+918023560205" },
+  { icon: Mail, label: "Email", value: "info@insureleague.com", href: "mailto:info@insureleague.com" },
   { icon: MapPin, label: "Office", value: OFFICE_ADDRESS },
   { icon: Clock, label: "Hours", value: "Mon – Sat, 9 AM – 7 PM" },
 ];
-
 
 export default function ContactPage() {
   return (
@@ -56,7 +58,7 @@ export default function ContactPage() {
 
           <ul className="mt-8 space-y-5">
             {details.map((d) => (
-              <li key={d.label} className="flex items-start gap-3">
+              <li key={`${d.label}-${d.value}`} className="flex items-start gap-3">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent text-primary">
                   <d.icon className="h-4 w-4" />
                 </span>

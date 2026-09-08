@@ -8,3 +8,6 @@ node_modules
 /insureleague-logo.png
 /logo.jpeg
 /Blueprint website.docx
+
+.vercel
+.env*
