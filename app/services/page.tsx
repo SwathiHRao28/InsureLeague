@@ -1,6 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, ShieldCheck, Users2, TrendingUp, HeartHandshake, Search, FileCheck } from "lucide-react";
+import { ArrowRight, ShieldCheck, Users2, TrendingUp, HeartHandshake, FileCheck } from "lucide-react";
+import { PageHero } from "@/components/PageHero";
+import { Reveal } from "@/components/Reveal";
+import servicesImg from "@/images/6.jpeg";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -18,36 +21,38 @@ const services = [
 export default function ServicesPage() {
   return (
     <div>
-      <section className="bg-accent/50 section-padding">
-        <div className="container-page">
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary">What we do</p>
-          <h1 className="mt-3 max-w-2xl text-4xl sm:text-5xl">Insurance advisory, end to end</h1>
-          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+      <PageHero
+        eyebrow="What we do"
+        title="Insurance advisory, end to end"
+        image={servicesImg}
+        imageAlt="InsureLeague office"
+        description={
+          <>
             From the first risk assessment to claims support, InsureLeague stays with you through
             the full lifecycle of your insurance needs.
-          </p>
-        </div>
-      </section>
+          </>
+        }
+      />
 
       <section className="section-padding">
-        <div className="container-page grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal className="container-page flex flex-wrap justify-center gap-6">
           {services.map((s) => (
             <Link
               key={s.title}
               href={s.href}
-              className="group rounded-2xl border border-border p-6 transition-all hover:-translate-y-1 hover:shadow-lg"
+              className="group flex w-full flex-col rounded-2xl border border-border bg-white p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent text-primary">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent text-primary transition-colors group-hover:bg-primary group-hover:text-white">
                 <s.icon className="h-5 w-5" />
               </span>
-              <h2 className="mt-4 text-lg font-semibold text-foreground">{s.title}</h2>
+              <h2 className="mt-4 text-xl font-semibold text-foreground">{s.title}</h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.description}</p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+              <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-primary">
                 Explore <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
               </span>
             </Link>
           ))}
-        </div>
+        </Reveal>
       </section>
     </div>
   );

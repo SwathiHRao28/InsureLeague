@@ -15,10 +15,10 @@ const reassurances = [
 
 export default function ConsultationPage() {
   return (
-    <div className="section-padding">
+    <div className="section-padding section-tint">
       <div className="container-page grid gap-12 lg:grid-cols-5">
         <div className="lg:col-span-2">
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary">Get started</p>
+          <p className="eyebrow">Get started</p>
           <h1 className="mt-3 text-4xl sm:text-5xl">Request a consultation</h1>
           <p className="mt-4 leading-relaxed text-muted-foreground">
             Tell us a little about what you need, and one of our advisors will call you back at a
@@ -37,7 +37,7 @@ export default function ConsultationPage() {
         </div>
 
         <div className="lg:col-span-3">
-          <div className="rounded-3xl border border-border bg-white p-6 sm:p-8">
+          <div className="rounded-3xl border border-border bg-white p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] sm:p-8">
             <CallbackForm />
           </div>
         </div>

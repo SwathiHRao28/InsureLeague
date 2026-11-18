@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { ShieldCheck } from "lucide-react";
+import { PageHero } from "@/components/PageHero";
+import { Reveal } from "@/components/Reveal";
+import partnersImg from "@/images/11.jpeg";
 
 export const metadata: Metadata = {
   title: "Our Partners",
@@ -27,19 +30,21 @@ const generalPartners = partners.filter((p) => p.category === "general");
 export default function PartnersPage() {
   return (
     <div>
-      <section className="bg-accent/50 section-padding">
-        <div className="container-page">
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary">Our Network</p>
-          <h1 className="mt-3 max-w-2xl text-4xl sm:text-5xl">A panel of leading insurers</h1>
-          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+      <PageHero
+        eyebrow="Our Network"
+        title="A panel of leading insurers"
+        image={partnersImg}
+        imageAlt="Bridge at sunrise"
+        description={
+          <>
             We work across a wide panel of insurers so our recommendations are based on fit, not
             affiliation. Partner logos shown are illustrative — final list confirmed on integration.
-          </p>
-        </div>
-      </section>
+          </>
+        }
+      />
 
       <section className="section-padding">
-        <div className="container-page space-y-16">
+        <Reveal className="container-page space-y-12">
           <PartnerGroup title="Life & Corporate Insurance Partners" partners={lifePartners} />
           <PartnerGroup title="General Insurance Partners" partners={generalPartners} />
 
@@ -52,7 +57,7 @@ export default function PartnersPage() {
               compared based on your individual requirements, coverage needs, and suitability.
             </p>
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );
@@ -63,19 +68,19 @@ function PartnerGroup({ title, partners }: { title: string; partners: Partner[] 
     <div>
       <div className="flex items-center gap-4">
         <span className="flex-1 border-t border-border" />
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{title}</h2>
+        <h2 className="eyebrow text-center">{title}</h2>
         <span className="flex-1 border-t border-border" />
       </div>
-      <div className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="mt-6 flex flex-wrap justify-center gap-4 sm:gap-6">
         {partners.map((partner) => (
           <div
             key={partner.name}
-            className="flex h-24 items-center justify-center gap-3 rounded-2xl border border-border bg-white px-4"
+            className="flex h-24 w-[calc(50%-0.5rem)] items-center justify-center gap-3 rounded-2xl border border-border bg-white px-4 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md sm:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]"
           >
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-primary">
               {partner.name.charAt(0)}
             </span>
-            <span className="text-sm font-semibold text-muted-foreground">{partner.name}</span>
+            <span className="text-sm font-semibold text-foreground">{partner.name}</span>
           </div>
         ))}
       </div>

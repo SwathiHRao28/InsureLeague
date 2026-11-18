@@ -4,12 +4,23 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Loader2, PenLine, Star, X } from "lucide-react";
 import { featuredReviews, type Review } from "@/data/reviews";
+import { cn } from "@/lib/utils";
+
+const AVATAR_COLORS = [
+  "bg-primary",
+  "bg-[#0B6E66]",
+  "bg-[#7FA81E]",
+  "bg-[#0F766E]",
+  "bg-[#4D7C0F]",
+];
+const LONG_REVIEW = 260;
 
 export function ReviewCarousel() {
   const [reviews, setReviews] = useState<Review[]>(featuredReviews);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [formOpen, setFormOpen] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   // Load customer-submitted reviews and show them before the featured ones.
   useEffect(() => {
@@ -27,14 +38,15 @@ export function ReviewCarousel() {
   }, []);
 
   useEffect(() => {
-    if (paused || formOpen) return;
+    if (paused || formOpen || expanded.size > 0) return;
     const timer = setInterval(() => {
       setCurrentIndex((current) => (current + 1) % reviews.length);
     }, 7000);
     return () => clearInterval(timer);
-  }, [reviews.length, paused, formOpen]);
+  }, [reviews.length, paused, formOpen, expanded.size]);
 
-  const handlePrev = () => setCurrentIndex((c) => (c - 1 + reviews.length) % reviews.length);
+  const handlePrev = () =>
+    setCurrentIndex((c) => (c - 1 + reviews.length) % reviews.length);
   const handleNext = () => setCurrentIndex((c) => (c + 1) % reviews.length);
 
   const handleSubmitted = (review: Review) => {
@@ -43,31 +55,45 @@ export function ReviewCarousel() {
     setFormOpen(false);
   };
 
-  const review = reviews[currentIndex] ?? reviews[0];
+  const toggleExpanded = (id: string) =>
+    setExpanded((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+
+  // One review on phones, two on tablets, three on desktop.
+  const visible = [0, 1, 2]
+    .slice(0, Math.min(3, reviews.length))
+    .map((offset) => (currentIndex + offset) % reviews.length);
 
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding section-tint">
       <div className="container-page">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-primary">Client reviews</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl">What our customers say</h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Real feedback from businesses and individuals who chose InsureLeague for insurance advisory and protection.
+            <p className="eyebrow">Client reviews</p>
+            <h2 className="mt-3 text-3xl sm:text-4xl">
+              What our customers say
+            </h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl text-sm leading-relaxed">
+              Real feedback from businesses and individuals who chose
+              InsureLeague for insurance advisory and protection.
             </p>
           </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => setFormOpen(true)}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+              className="bg-primary text-primary-foreground shadow-primary/25 hover:bg-primary/90 inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold shadow-lg transition-all hover:-translate-y-0.5"
             >
               <PenLine className="h-4 w-4" /> Write a review
             </button>
             <button
               type="button"
               onClick={handlePrev}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white text-foreground transition-colors hover:border-primary hover:text-primary"
+              className="border-border text-foreground hover:border-primary hover:text-primary inline-flex h-11 w-11 items-center justify-center rounded-full border bg-white transition-colors"
               aria-label="Previous review"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -75,7 +101,7 @@ export function ReviewCarousel() {
             <button
               type="button"
               onClick={handleNext}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white text-foreground transition-colors hover:border-primary hover:text-primary"
+              className="border-border text-foreground hover:border-primary hover:text-primary inline-flex h-11 w-11 items-center justify-center rounded-full border bg-white transition-colors"
               aria-label="Next review"
             >
               <ArrowRight className="h-4 w-4" />
@@ -84,34 +110,109 @@ export function ReviewCarousel() {
         </div>
 
         <div
-          className="mt-8 rounded-3xl border border-border bg-muted p-8 shadow-sm sm:p-10"
+          className="mt-8 grid items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          <Stars rating={review.rating} />
-          <p className="mt-6 whitespace-pre-line text-lg leading-relaxed text-foreground">“{review.text}”</p>
-          <div className="mt-6 flex flex-wrap items-end justify-between gap-4 border-t border-border pt-6">
-            <div>
-              <p className="text-base font-semibold text-foreground">{review.name}</p>
-              {review.role && <p className="mt-1 text-sm text-muted-foreground">{review.role}</p>}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              {currentIndex + 1} / {reviews.length}
-            </p>
-          </div>
+          {visible.map((reviewIndex, position) => {
+            const review = reviews[reviewIndex];
+            const isLong = review.text.length > LONG_REVIEW;
+            const isOpen = expanded.has(review.id);
+            return (
+              <article
+                key={`${review.id}-${position}`}
+                className={cn(
+                  "border-border flex h-full flex-col rounded-3xl border bg-white p-6 shadow-sm transition-shadow hover:shadow-md",
+                  position === 1 && "hidden md:flex",
+                  position === 2 && "hidden lg:flex"
+                )}
+              >
+                <Stars rating={review.rating} />
+                <p
+                  className={cn(
+                    "text-foreground mt-4 text-[15px] leading-relaxed whitespace-pre-line",
+                    isLong && !isOpen && "line-clamp-6"
+                  )}
+                >
+                  “{review.text}”
+                </p>
+                {isLong ? (
+                  <button
+                    type="button"
+                    onClick={() => toggleExpanded(review.id)}
+                    className="text-primary mt-2 w-fit text-sm font-semibold hover:underline"
+                  >
+                    {isOpen ? "Show less" : "Read more"}
+                  </button>
+                ) : null}
+                <div className="mt-auto pt-5">
+                  <div className="border-border flex items-center gap-3 border-t pt-5">
+                    <span
+                      className={cn(
+                        "flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-base font-semibold text-white",
+                        AVATAR_COLORS[reviewIndex % AVATAR_COLORS.length]
+                      )}
+                      aria-hidden="true"
+                    >
+                      {review.name.trim().charAt(0).toUpperCase()}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-foreground truncate text-base font-semibold">
+                        {review.name}
+                      </p>
+                      {review.role && (
+                        <p className="text-muted-foreground truncate text-sm">
+                          {review.role}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-1.5">
+          {reviews.map((review, index) => (
+            <button
+              key={review.id}
+              type="button"
+              onClick={() => setCurrentIndex(index)}
+              aria-label={`Show review ${index + 1} of ${reviews.length}`}
+              className={cn(
+                "h-2 rounded-full transition-all",
+                index === currentIndex
+                  ? "bg-primary w-6"
+                  : "bg-primary/25 hover:bg-primary/50 w-2"
+              )}
+            />
+          ))}
         </div>
       </div>
 
-      {formOpen && <ReviewForm onClose={() => setFormOpen(false)} onSubmitted={handleSubmitted} />}
+      {formOpen && (
+        <ReviewForm
+          onClose={() => setFormOpen(false)}
+          onSubmitted={handleSubmitted}
+        />
+      )}
     </section>
   );
 }
 
 function Stars({ rating }: { rating: number }) {
   return (
-    <div className="flex items-center gap-1 text-primary" aria-label={`${rating} out of 5 stars`}>
+    <div
+      className="flex items-center gap-1 text-[#F5B301]"
+      aria-label={`${rating} out of 5 stars`}
+    >
       {Array.from({ length: 5 }).map((_, index) => (
-        <Star key={index} className="h-4 w-4" fill={index < rating ? "currentColor" : "none"} />
+        <Star
+          key={index}
+          className="h-4 w-4"
+          fill={index < rating ? "currentColor" : "none"}
+        />
       ))}
     </div>
   );
@@ -183,7 +284,7 @@ function ReviewForm({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full p-1 text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground rounded-full p-1"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
@@ -192,7 +293,9 @@ function ReviewForm({
 
         <div className="mt-6 space-y-4">
           <div>
-            <p className="mb-2 text-sm font-medium text-foreground">Your rating</p>
+            <p className="text-foreground mb-2 text-sm font-medium">
+              Your rating
+            </p>
             <div className="flex gap-1" onMouseLeave={() => setHover(0)}>
               {[1, 2, 3, 4, 5].map((value) => (
                 <button
@@ -203,13 +306,18 @@ function ReviewForm({
                   className="text-primary"
                   aria-label={`${value} star${value > 1 ? "s" : ""}`}
                 >
-                  <Star className="h-7 w-7" fill={value <= (hover || rating) ? "currentColor" : "none"} />
+                  <Star
+                    className="h-7 w-7"
+                    fill={value <= (hover || rating) ? "currentColor" : "none"}
+                  />
                 </button>
               ))}
             </div>
           </div>
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-foreground">Name *</span>
+            <span className="text-foreground mb-2 block text-sm font-medium">
+              Name *
+            </span>
             <input
               required
               minLength={2}
@@ -220,7 +328,9 @@ function ReviewForm({
             />
           </label>
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-foreground">Role / Company (optional)</span>
+            <span className="text-foreground mb-2 block text-sm font-medium">
+              Role / Company (optional)
+            </span>
             <input
               maxLength={80}
               value={role}
@@ -230,7 +340,9 @@ function ReviewForm({
             />
           </label>
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-foreground">Your review *</span>
+            <span className="text-foreground mb-2 block text-sm font-medium">
+              Your review *
+            </span>
             <textarea
               required
               minLength={10}
@@ -246,7 +358,7 @@ function ReviewForm({
         <button
           type="submit"
           disabled={loading}
-          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-60"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold shadow-sm transition-colors disabled:opacity-60"
         >
           {loading && <Loader2 className="h-4 w-4 animate-spin" />}
           Submit review

@@ -13,21 +13,29 @@ const MAPS_EMBED_URL =
   "https://www.google.com/maps?q=" + encodeURIComponent(OFFICE_ADDRESS) + "&output=embed";
 const MAPS_LINK = "https://maps.app.goo.gl/wL4PTLL2TmEDZHPf6";
 
-const details = [
-  { icon: Phone, label: "Phone", value: "98452 31663", href: "tel:+919845231663" },
-  { icon: Phone, label: "Phone", value: "99006 00661", href: "tel:+919900600661" },
-  { icon: Phone, label: "Phone", value: "080 - 2356 0205", href: "tel:+918023560205" },
-  { icon: Mail, label: "Email", value: "info@insureleague.com", href: "mailto:info@insureleague.com" },
-  { icon: MapPin, label: "Office", value: OFFICE_ADDRESS },
-  { icon: Clock, label: "Hours", value: "Mon – Sat, 9 AM – 7 PM" },
+type Detail = { icon: typeof Phone; label: string; items: { value: string; href?: string }[] };
+
+const details: Detail[] = [
+  {
+    icon: Phone,
+    label: "Phone",
+    items: [
+      { value: "98452 31663", href: "tel:+919845231663" },
+      { value: "99006 00661", href: "tel:+919900600661" },
+      { value: "080 - 2356 0205", href: "tel:+918023560205" },
+    ],
+  },
+  { icon: Mail, label: "Email", items: [{ value: "info@insureleague.com", href: "mailto:info@insureleague.com" }] },
+  { icon: MapPin, label: "Office", items: [{ value: OFFICE_ADDRESS }] },
+  { icon: Clock, label: "Hours", items: [{ value: "Mon – Sat, 9 AM – 7 PM" }] },
 ];
 
 export default function ContactPage() {
   return (
-    <div className="pb-16 pt-10 sm:pb-20 lg:pb-24">
+    <div className="section-padding section-tint">
       <div className="container-page grid gap-12 lg:grid-cols-5">
         <div className="lg:col-span-2">
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary">Contact</p>
+          <p className="eyebrow">Contact</p>
           <h1 className="mt-3 text-4xl sm:text-5xl">We&apos;d love to hear from you</h1>
           <p className="mt-4 leading-relaxed text-muted-foreground">
             Reach out directly, or fill in the form and we&apos;ll call you back.
@@ -58,19 +66,25 @@ export default function ContactPage() {
 
           <ul className="mt-8 space-y-5">
             {details.map((d) => (
-              <li key={`${d.label}-${d.value}`} className="flex items-start gap-3">
+              <li key={d.label} className="flex items-start gap-3">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent text-primary">
                   <d.icon className="h-4 w-4" />
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{d.label}</p>
-                  {d.href ? (
-                    <a href={d.href} className="text-sm font-medium text-foreground hover:text-primary">
-                      {d.value}
-                    </a>
-                  ) : (
-                    <p className="text-sm font-medium leading-relaxed text-foreground">{d.value}</p>
-                  )}
+                  <div className="flex flex-wrap gap-x-4 gap-y-1">
+                    {d.items.map((item) =>
+                      item.href ? (
+                        <a key={item.value} href={item.href} className="text-sm font-medium text-foreground hover:text-primary">
+                          {item.value}
+                        </a>
+                      ) : (
+                        <p key={item.value} className="text-sm font-medium leading-relaxed text-foreground">
+                          {item.value}
+                        </p>
+                      )
+                    )}
+                  </div>
                 </div>
               </li>
             ))}
@@ -78,7 +92,7 @@ export default function ContactPage() {
         </div>
 
         <div className="lg:col-span-3">
-          <div className="rounded-3xl border border-border bg-white p-6 sm:p-8">
+          <div className="rounded-3xl border border-border bg-white p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] sm:p-8">
             <CallbackForm />
           </div>
         </div>

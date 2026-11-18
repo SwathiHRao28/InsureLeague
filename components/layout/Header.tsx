@@ -21,7 +21,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
           className="flex items-center gap-3"
@@ -76,9 +76,9 @@ export function Header() {
         </button>
       </div>
 
-      <div className="hidden border-t border-border lg:block">
+      <div className="hidden border-t border-border/70 bg-white lg:block">
         <div
-          className="mx-auto flex h-14 max-w-7xl items-center gap-10 px-4 sm:px-6 lg:px-8"
+          className="mx-auto flex h-11 max-w-7xl items-center gap-10 px-4 sm:px-6 lg:px-8"
           onMouseLeave={() => setOpenDropdown(null)}
         >
           <div className="relative">

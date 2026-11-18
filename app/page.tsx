@@ -16,6 +16,7 @@ import bgOne from "@/images/1.jpeg";
 import corporateServicesImg from "@/images/6.jpeg";
 import individualServicesImg from "@/images/2.jpeg";
 import { ReviewCarousel } from "@/components/ReviewCarousel";
+import { Reveal } from "@/components/Reveal";
 
 const services = [
   {
@@ -41,12 +42,10 @@ const services = [
 export default function HomePage() {
   return (
     <div>
-      <section className="relative overflow-hidden">
-        <div className="grid items-stretch lg:grid-cols-[0.85fr_1fr]">
-          <div className="container-page py-20 lg:py-28">
-            <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-              IRDAI-Approved Insurance Advisory
-            </p>
+      <section className="section-tint relative overflow-hidden">
+        <div className="container-page grid items-center gap-8 pb-20 pt-10 sm:pt-14 lg:grid-cols-[1fr_1.05fr] lg:gap-12 lg:pb-24 lg:pt-16">
+          <div>
+            <p className="eyebrow">IRDAI-Approved Insurance Advisory</p>
             <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl">
               Insurance advice that puts your protection first.
             </h1>
@@ -57,43 +56,52 @@ export default function HomePage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/consultation"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:-translate-y-0.5 hover:bg-primary/90"
               >
                 Request a callback <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+                className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
               >
                 Learn about us
               </Link>
             </div>
           </div>
-          <div className="relative min-h-[420px] w-full lg:min-h-[640px]">
-            <Image src={bgOne} alt="Insurance advisory" fill className="object-cover" priority />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/30 via-primary/5 to-transparent" />
-          </div>
-        </div>
-
-        <div className="container-page">
-          <div className="relative z-10 -mt-16 rounded-3xl bg-white p-6 shadow-[0_30px_80px_rgba(15,23,42,0.15)] sm:p-8 lg:-mt-20">
-            <div className="grid grid-cols-2 gap-6 divide-y divide-border sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-y-0">
-              <Stat icon={Award} value="35+ Years" label="of Experience" />
-              <Stat icon={Star} value="Top Rated" label="on Google Reviews" />
-              <Stat icon={ShieldCheck} value="IRDAI" label="Registered" />
-              <Stat icon={Users2} value="12 Partners" label="Insurer Network" />
-            </div>
+          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-3xl shadow-[0_30px_70px_rgba(15,23,42,0.18)] lg:aspect-[5/4]">
+            <Image
+              src={bgOne}
+              alt="Insurance advisory"
+              fill
+              priority
+              sizes="(min-width: 1024px) 640px, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/25 via-transparent to-transparent" />
           </div>
         </div>
       </section>
 
-      <section id="services" className="section-padding pt-20 bg-white">
+      <div className="container-page">
+        <div className="relative z-10 -mt-12 rounded-3xl bg-white p-5 shadow-[0_24px_60px_rgba(15,23,42,0.12)] sm:p-6 lg:-mt-14">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-border">
+            <Stat icon={Award} value="35+ Years" label="of Experience" />
+            <Stat icon={Star} value="Top Rated" label="on Google Reviews" />
+            <Stat icon={ShieldCheck} value="IRDAI" label="Registered" />
+            <Stat icon={Users2} value="12 Partners" label="Insurer Network" />
+          </div>
+        </div>
+      </div>
+
+      <section id="services" className="section-padding">
         <div className="container-page">
-          <h2 className="max-w-xl text-3xl sm:text-4xl">Our services</h2>
-          <p className="mt-4 max-w-xl text-muted-foreground">
-            End-to-end insurance advisory for businesses, employees, and individuals.
-          </p>
-          <div className="mt-10 grid gap-8 sm:grid-cols-2">
+          <Reveal>
+            <h2 className="max-w-xl text-3xl sm:text-4xl">Our services</h2>
+            <p className="mt-3 max-w-xl text-muted-foreground">
+              End-to-end insurance advisory for businesses, employees, and individuals.
+            </p>
+          </Reveal>
+          <Reveal className="mt-8 grid gap-6 sm:grid-cols-2">
             <ServiceCard
               image={corporateServicesImg}
               title="Corporate Services"
@@ -110,29 +118,31 @@ export default function HomePage() {
               cta="Explore Individual Services"
               icon={HeartHandshake}
             />
-          </div>
-          <div className="mt-8 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          </Reveal>
+          <Reveal className="mt-6 grid gap-6 md:grid-cols-3">
             {services.map((s) => (
               <Link
                 key={s.title}
                 href={s.href}
-                className="group h-full rounded-2xl border border-border bg-white p-8 transition-all hover:-translate-y-1 hover:shadow-lg"
+                className="group flex h-full items-start gap-4 rounded-2xl border border-border bg-white p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
               >
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent text-primary">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-primary transition-colors group-hover:bg-primary group-hover:text-white">
                   <s.icon className="h-5 w-5" />
                 </span>
-                <h3 className="mt-4 text-base font-semibold text-foreground">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.description}</p>
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">{s.title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{s.description}</p>
+                </div>
               </Link>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="section-padding">
+      <section className="bg-gradient-to-br from-primary to-[#0B6E66] py-12 sm:py-14">
         <div className="container-page">
-          <div className="rounded-[2rem] border border-border bg-white p-8 shadow-xl">
-            <p className="text-sm uppercase tracking-[0.25em] text-primary">Why choose us?</p>
+          <Reveal>
+            <h2 className="text-2xl text-white sm:text-3xl">Why choose us?</h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 { icon: Compass, title: "Needs-Based Advisory" },
@@ -140,34 +150,39 @@ export default function HomePage() {
                 { icon: ShieldCheck, title: "End-to-End Insurance Solutions" },
                 { icon: Handshake, title: "Client-Centric Approach" },
               ].map((item) => (
-                <div key={item.title} className="flex items-center gap-4 rounded-3xl border border-border bg-slate-50 px-5 py-4">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <div
+                  key={item.title}
+                  className="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 px-5 py-5 backdrop-blur-sm transition-colors hover:bg-white/15"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-primary">
                     <item.icon className="h-5 w-5" />
                   </div>
-                  <p className="text-base font-semibold text-foreground">{item.title}</p>
+                  <p className="text-base font-semibold text-white">{item.title}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       <ReviewCarousel />
 
       <section className="section-padding">
-        <div className="container-page rounded-3xl bg-primary px-8 py-14 text-center text-primary-foreground sm:px-16">
-          <h2 className="text-3xl text-primary-foreground sm:text-4xl">
-            Not sure which plan is right for you?
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-primary-foreground/90">
-            Talk to one of our advisors — no obligation, no jargon, just clear guidance.
-          </p>
-          <Link
-            href="/consultation"
-            className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-primary"
-          >
-            Request a callback <ArrowRight className="h-4 w-4" />
-          </Link>
+        <div className="container-page">
+          <Reveal className="rounded-3xl bg-gradient-to-br from-primary to-[#0B6E66] px-6 py-12 text-center text-primary-foreground shadow-[0_24px_60px_rgba(13,148,136,0.25)] sm:px-16">
+            <h2 className="text-3xl text-primary-foreground sm:text-4xl">
+              Not sure which plan is right for you?
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-primary-foreground/90">
+              Talk to one of our advisors — no obligation, no jargon, just clear guidance.
+            </p>
+            <Link
+              href="/consultation"
+              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
+            >
+              Request a callback <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Reveal>
         </div>
       </section>
     </div>
@@ -184,13 +199,13 @@ function Stat({
   label: string;
 }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-2">
-      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent text-primary">
+    <div className="flex flex-col items-center gap-2 px-2 text-center sm:flex-row sm:gap-3 sm:px-4 sm:py-1 sm:text-left lg:justify-center">
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-primary sm:h-12 sm:w-12">
         <Icon className="h-5 w-5" />
       </span>
       <div>
-        <p className="text-base font-serif font-semibold text-foreground sm:text-lg">{value}</p>
-        <p className="mt-0.5 text-sm text-muted-foreground">{label}</p>
+        <p className="font-serif text-base font-semibold leading-tight text-foreground sm:text-lg">{value}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground sm:text-sm">{label}</p>
       </div>
     </div>
   );
@@ -212,18 +227,24 @@ function ServiceCard({
   icon: LucideIcon;
 }) {
   return (
-    <div className="relative aspect-[4/5] overflow-hidden rounded-3xl sm:aspect-[3/4]">
-      <Image src={image} alt={title} fill className="object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-slate-950/10" />
-      <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
+    <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl sm:aspect-[16/12] lg:aspect-[16/10]">
+      <Image
+        src={image}
+        alt={title}
+        fill
+        sizes="(min-width: 640px) 50vw, 100vw"
+        className="object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-transparent" />
+      <div className="absolute inset-0 flex flex-col justify-end p-6 text-white sm:p-8">
         <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-primary">
           <Icon className="h-5 w-5" />
         </span>
         <h3 className="mt-4 text-2xl font-semibold">{title}</h3>
-        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-white/85">{description}</p>
+        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-white/90">{description}</p>
         <Link
           href={href}
-          className="mt-6 inline-flex w-fit items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-white/90"
+          className="mt-5 inline-flex w-fit items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-white/90"
         >
           {cta} <ArrowRight className="h-4 w-4" />
         </Link>
@@ -231,4 +252,3 @@ function ServiceCard({
     </div>
   );
 }
-

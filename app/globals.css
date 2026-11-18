@@ -25,7 +25,7 @@
 }
 
 :root {
-  --background: 180 20% 98%;
+  --background: 0 0% 100%;
   --foreground: 215 28% 17%;
   --primary: 175 83% 36%;
   --primary-foreground: 0 0% 100%;
@@ -70,6 +70,15 @@
     letter-spacing: -0.01em;
   }
 
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem !important;
+  }
+
   ::selection {
     background-color: hsl(var(--primary) / 0.2);
   }
@@ -80,6 +89,14 @@
     @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
   }
   .section-padding {
-    @apply py-16 sm:py-20 lg:py-24;
+    @apply py-12 sm:py-14 lg:py-16;
+  }
+  /* The one tinted background used to alternate with white sections. */
+  .section-tint {
+    background-color: hsl(var(--accent) / 0.45);
+  }
+  /* Small label above headings — one style everywhere. */
+  .eyebrow {
+    @apply font-sans text-xs font-semibold uppercase tracking-[0.18em] text-primary;
   }
 }

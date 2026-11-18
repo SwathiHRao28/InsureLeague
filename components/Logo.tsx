@@ -30,7 +30,7 @@ export function Logo({ size = "md", className }: { size?: "sm" | "md"; className
   const sm = size === "sm";
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <LogoMark className={sm ? "h-9 w-auto" : "h-12 w-auto"} />
+      <LogoMark className={sm ? "h-9 w-auto" : "h-11 w-auto"} />
       <span className="flex flex-col leading-none">
         <span
           className={cn(

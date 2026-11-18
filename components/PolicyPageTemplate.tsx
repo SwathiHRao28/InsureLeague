@@ -2,6 +2,7 @@ import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Product } from "@/data/products";
+import { Reveal } from "@/components/Reveal";
 import retirement8 from "@/images/8.jpeg";
 import healthImage from "@/images/9.jpeg";
 import termImage from "@/images/10.jpeg";
@@ -23,166 +24,150 @@ const productBackgrounds: Record<string, StaticImageData[]> = {
 };
 
 export function PolicyPageTemplate({ product }: { product: Product }) {
-  const overviewBullets = product.features.slice(0, 4).map((feature) => feature.title);
   const whoItsForHeading = product.whoItsForHeading ?? "Who it protects";
   const featuresHeading = product.featuresHeading ?? "What it can cover";
+  // Features with descriptions get their own detailed section; otherwise their titles
+  // are shown once, in the summary card — so nothing on the page is repeated.
+  const featuresHaveDetail = product.features.some((feature) => feature.description);
+  const heroImage = productBackgrounds[product.slug]?.[0];
+
+  const cards: { heading: string; body: React.ReactNode }[] = [
+    { heading: "Why it matters", body: <p>{product.summary}</p> },
+  ];
+  if (product.whoItsFor.length > 0) {
+    cards.push({ heading: whoItsForHeading, body: <BulletList items={product.whoItsFor} /> });
+  }
+  if (product.features.length > 0 && !featuresHaveDetail) {
+    cards.push({ heading: featuresHeading, body: <BulletList items={product.features.map((f) => f.title)} /> });
+  }
+  const cardCols = cards.length === 3 ? "lg:grid-cols-3" : cards.length === 2 ? "lg:grid-cols-2" : "";
 
   return (
     <div>
-      <section className="pb-4 pt-10">
-        <div className="container-page">
-          <div className="overflow-hidden rounded-[2rem] bg-white p-5 shadow-[0_40px_120px_rgba(15,23,42,0.08)]">
-            <div className="grid items-center gap-4 lg:grid-cols-[1.35fr_0.95fr]">
-              <div className="max-w-3xl space-y-4">
-                <p className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">
-                  {product.category === "corporate" ? "Corporate Insurance" : "Individual Insurance"}
-                </p>
-                <h1 className="text-5xl font-semibold tracking-tight text-slate-950 sm:text-6xl">
-                  {product.name}
-                </h1>
-                {product.tagline ? <p className="text-lg leading-relaxed text-slate-600">{product.tagline}</p> : null}
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href="/consultation"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition hover:bg-primary/95"
-                  >
-                    Request a callback <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <Link
-                    href={product.category === "corporate" ? "/corporate" : "/individual"}
-                    className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-primary hover:text-primary"
-                  >
-                    View all {product.category} plans
-                  </Link>
-                </div>
-              </div>
-
-              {productBackgrounds[product.slug]?.[0] ? (
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[2rem] bg-slate-100">
-                  <Image
-                    src={productBackgrounds[product.slug][0]}
-                    alt={product.name}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              ) : null}
+      <section className="section-tint">
+        <div className="container-page grid items-center gap-8 py-10 sm:py-12 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
+          <div>
+            <p className="eyebrow">
+              {product.category === "corporate" ? "Corporate Insurance" : "Individual Insurance"}
+            </p>
+            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              {product.name}
+            </h1>
+            {product.tagline ? (
+              <p className="mt-4 text-lg leading-relaxed text-slate-600">{product.tagline}</p>
+            ) : null}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/consultation"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:-translate-y-0.5 hover:bg-primary/95"
+              >
+                Request a callback <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href={product.category === "corporate" ? "/corporate" : "/individual"}
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-primary hover:text-primary"
+              >
+                View all {product.category} plans
+              </Link>
             </div>
           </div>
+
+          {heroImage ? (
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl bg-slate-100 shadow-[0_24px_60px_rgba(15,23,42,0.12)] lg:aspect-[4/3]">
+              <Image
+                src={heroImage}
+                alt={product.name}
+                fill
+                priority
+                sizes="(min-width: 1024px) 560px, 100vw"
+                className="object-cover"
+              />
+            </div>
+          ) : null}
         </div>
       </section>
 
-      <section className="pb-16 pt-0 sm:pb-20 lg:pb-24">
-        <div className="container-page">
-          <div className="grid gap-4 lg:grid-cols-3">
-            <div className="rounded-[2rem] border border-border bg-white p-6">
-              <div className="mb-4 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.35em] text-primary">
-                <span className="inline-flex h-2.5 w-8 rounded-full bg-primary" />01
+      <section className="section-padding">
+        <div className="container-page space-y-10">
+          <Reveal className={`grid gap-5 ${cardCols}`}>
+            {cards.map((card, index) => (
+              <div
+                key={card.heading}
+                className="rounded-3xl border border-border bg-white p-6 transition-all hover:border-primary/40 hover:shadow-md"
+              >
+                <div className="mb-4 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+                  <span className="inline-flex h-2.5 w-8 rounded-full bg-primary" />
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+                <h2 className="text-xl font-semibold text-slate-950">{card.heading}</h2>
+                <div className="mt-4 text-sm leading-relaxed text-slate-600">{card.body}</div>
               </div>
-              <h3 className="text-xl font-semibold text-slate-950">Why it matters</h3>
-              <p className="mt-4 text-sm leading-relaxed text-slate-600">{product.summary}</p>
-            </div>
+            ))}
+          </Reveal>
 
-            <div className="rounded-[2rem] border border-border bg-white p-6">
-              <div className="mb-4 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.35em] text-primary">
-                <span className="inline-flex h-2.5 w-8 rounded-full bg-primary" />02
-              </div>
-              <h3 className="text-xl font-semibold text-slate-950">{whoItsForHeading}</h3>
-              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-600">
-                {product.whoItsFor.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
-                    {item}
-                  </li>
+          {featuresHaveDetail ? (
+            <Reveal>
+              <h2 className="text-2xl sm:text-3xl">{featuresHeading}</h2>
+              <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {product.features.map((feature) => (
+                  <div key={feature.title} className="rounded-2xl border border-border bg-white p-5">
+                    <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
+                    {feature.description ? (
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
+                    ) : null}
+                  </div>
                 ))}
-              </ul>
-            </div>
-
-            <div className="rounded-[2rem] border border-border bg-white p-6">
-              <div className="mb-4 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.35em] text-primary">
-                <span className="inline-flex h-2.5 w-8 rounded-full bg-primary" />03
               </div>
-              <h3 className="text-xl font-semibold text-slate-950">{featuresHeading}</h3>
-              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-600">
-                {overviewBullets.map((bullet) => (
-                  <li key={bullet} className="flex items-start gap-3">
-                    <span className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+            </Reveal>
+          ) : null}
 
-      <section className="py-8">
-        <div className="container-page">
-          <div className="rounded-[2rem] border border-border bg-white p-5 shadow-sm">
-            <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
+          {product.faqs.length > 0 ? (
+            <Reveal className="max-w-4xl">
+              <h2 className="text-2xl sm:text-3xl">Frequently asked questions</h2>
+              <div className="mt-6 space-y-4">
+                {product.faqs.map((faq) => (
+                  <div key={faq.question} className="rounded-2xl border border-border bg-white p-5">
+                    <h3 className="text-base font-semibold text-foreground">{faq.question}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          ) : null}
+
+          <Reveal className="rounded-3xl bg-gradient-to-br from-primary to-[#0B6E66] p-6 text-white shadow-[0_20px_50px_rgba(13,148,136,0.22)] sm:p-8">
+            <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">Not sure if this plan is right for you?</p>
-                <p className="mt-3 text-lg font-semibold text-slate-950">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                  Not sure if this plan is right for you?
+                </p>
+                <p className="mt-2 text-lg font-semibold sm:text-xl">
                   Book a free consultation with our {product.name.toLowerCase()} experts.
                 </p>
               </div>
               <Link
                 href="/consultation"
-                className="inline-flex items-center justify-center rounded-full border border-primary bg-primary px-8 py-4 text-sm font-semibold text-white transition hover:bg-primary/95"
+                className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
               >
                 Book a free consultation
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-10">
-        <div className="container-page grid gap-10 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <h2 className="text-2xl">Overview</h2>
-            <p className="mt-4 leading-relaxed text-muted-foreground">{product.summary}</p>
-
-            <h2 className="mt-12 text-2xl">{featuresHeading}</h2>
-            <div className="mt-6 grid gap-6 sm:grid-cols-2">
-              {product.features.map((feature) => (
-                <div key={feature.title} className="rounded-2xl border border-border p-5">
-                  <h3 className="text-base font-semibold text-foreground">{feature.title}</h3>
-                  {feature.description ? <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{feature.description}</p> : null}
-                </div>
-              ))}
-            </div>
-
-            {product.faqs.length > 0 ? (
-              <>
-                <h2 className="mt-12 text-2xl">Frequently asked questions</h2>
-                <div className="mt-6 space-y-4">
-                  {product.faqs.map((faq) => (
-                    <div key={faq.question} className="rounded-2xl bg-muted p-5">
-                      <h3 className="text-sm font-semibold text-foreground">{faq.question}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : null}
-          </div>
-
-          <aside className="space-y-6">
-            <div className="rounded-2xl border border-border p-6">
-              <h3 className="text-base font-semibold text-foreground">{whoItsForHeading}</h3>
-              <ul className="mt-4 space-y-2.5">
-                {product.whoItsFor.map((who) => (
-                  <li key={who} className="text-sm text-muted-foreground">
-                    • {who}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </aside>
+          </Reveal>
         </div>
       </section>
     </div>
+  );
+}
+
+function BulletList({ items }: { items: string[] }) {
+  return (
+    <ul className="space-y-3">
+      {items.map((item) => (
+        <li key={item} className="flex items-start gap-3">
+          <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />
+          {item}
+        </li>
+      ))}
+    </ul>
   );
 }

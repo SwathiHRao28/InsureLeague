@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "sonner";
+import { FloatingCall } from "@/components/FloatingCall";
 import { BUSINESS, SITE_URL } from "@/lib/site";
 
 const inter = Inter({
@@ -84,6 +85,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <FloatingCall />
         <Toaster richColors position="top-center" />
       </body>
     </html>
