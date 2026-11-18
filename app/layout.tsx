@@ -49,7 +49,7 @@ const businessJsonLd = {
   slogan: BUSINESS.slogan,
   description: BUSINESS.description,
   url: SITE_URL,
-  logo: `${SITE_URL}/icon.svg`,
+  logo: `${SITE_URL}/images/logo/insureleague-logo-original.png`,
   image: `${SITE_URL}/opengraph-image`,
   email: BUSINESS.email,
   telephone: BUSINESS.phones[0],
