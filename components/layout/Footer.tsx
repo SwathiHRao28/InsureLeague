@@ -99,7 +99,7 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="container-page flex flex-col items-center justify-between gap-3 py-6 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            © {year} InsureLeague. All rights reserved. IRDAI Registration No. XXXXXXX.
+            © {year} InsureLeague. All rights reserved. IRDAI Registration No. IMF187123560320210407.
           </p>
           <div className="flex gap-5 text-xs text-muted-foreground">
             <Link href="/privacy-policy" className="hover:text-primary">

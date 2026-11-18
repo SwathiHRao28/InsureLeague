@@ -38,7 +38,7 @@ export default function PartnersPage() {
         description={
           <>
             We work across a wide panel of insurers so our recommendations are based on fit, not
-            affiliation. Partner logos shown are illustrative — final list confirmed on integration.
+            affiliation.
           </>
         }
       />
