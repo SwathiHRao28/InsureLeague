@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import { Logo } from "@/components/Logo";
 import { useState } from "react";
 import { ChevronDown, Home, LockKeyhole, Menu } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
@@ -22,15 +22,13 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-3" onClick={() => setOpenDropdown(null)}>
-          <Image
-            src="/images/logo/insureleague-logo.png"
-            alt="InsureLeague — Securing Lives"
-            width={240}
-            height={80}
-            priority
-            className="h-16 w-auto object-contain"
-          />
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+          aria-label="InsureLeague — Securing Lives, home"
+          onClick={() => setOpenDropdown(null)}
+        >
+          <Logo />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

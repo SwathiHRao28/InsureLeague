@@ -13,7 +13,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import bgOne from "@/images/1.jpeg";
-import founderStory from "@/images/3.jpeg";
 import corporateServicesImg from "@/images/6.jpeg";
 import individualServicesImg from "@/images/2.jpeg";
 import { ReviewCarousel } from "@/components/ReviewCarousel";
@@ -80,7 +79,7 @@ export default function HomePage() {
           <div className="relative z-10 -mt-16 rounded-3xl bg-white p-6 shadow-[0_30px_80px_rgba(15,23,42,0.15)] sm:p-8 lg:-mt-20">
             <div className="grid grid-cols-2 gap-6 divide-y divide-border sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-y-0">
               <Stat icon={Award} value="35+ Years" label="of Experience" />
-              <Stat icon={Star} value="146 Reviews" label="with 5★ Rating" />
+              <Stat icon={Star} value="Top Rated" label="on Google Reviews" />
               <Stat icon={ShieldCheck} value="IRDAI" label="Registered" />
               <Stat icon={Users2} value="12 Partners" label="Insurer Network" />
             </div>
@@ -131,32 +130,10 @@ export default function HomePage() {
       </section>
 
       <section className="section-padding">
-        <div className="container-page grid gap-8 lg:grid-cols-[3fr_1fr]">
-          <div className="overflow-hidden rounded-[2rem] bg-slate-950 shadow-xl">
-            <div className="relative aspect-[16/9] overflow-hidden">
-              <Image src={founderStory} alt="Our vision, our values" fill className="object-cover" />
-              <div className="absolute inset-0 bg-black/40" />
-              <div className="absolute inset-0 flex flex-col justify-between p-8 text-white">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.25em] text-primary">Our story</p>
-                  <h2 className="mt-3 max-w-xl text-3xl font-semibold">Our vision. Our values.</h2>
-                </div>
-                <div className="flex items-center justify-center">
-                  <button
-                    type="button"
-                    className="inline-flex h-20 w-20 items-center justify-center rounded-full border-2 border-white bg-white/10 text-white transition hover:bg-white/20"
-                    aria-label="Play video"
-                  >
-                    <span className="ml-1 text-3xl">▶</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div className="container-page">
           <div className="rounded-[2rem] border border-border bg-white p-8 shadow-xl">
             <p className="text-sm uppercase tracking-[0.25em] text-primary">Why choose us?</p>
-            <div className="mt-8 space-y-4">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 { icon: Compass, title: "Needs-Based Advisory" },
                 { icon: Star, title: "Experienced Leadership" },

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 84" fill="none">
+  <defs>
+    <clipPath id="il-cross">
+      <rect x="44" y="30" width="32" height="44" />
+    </clipPath>
+  </defs>
+  <!-- Teal ribbon: top of left loop, down through the centre, bottom of right loop -->
+  <path d="M14 54C14 31 46 31 60 54C74 77 106 77 106 54" stroke="#14A89A" stroke-width="12" />
+  <!-- White gap so the lime ribbon reads as passing over the teal one -->
+  <path d="M106 54C106 31 74 31 60 54C46 77 14 77 14 54" stroke="#FFFFFF" stroke-width="20" clip-path="url(#il-cross)" />
+  <!-- Lime ribbon: top of right loop, down through the centre, bottom of left loop -->
+  <path d="M106 54C106 31 74 31 60 54C46 77 14 77 14 54" stroke="#B5D334" stroke-width="12" />
+  <!-- The two people -->
+  <circle cx="33" cy="15" r="9" fill="#14A89A" />
+  <circle cx="88" cy="22" r="6.5" fill="#B5D334" />
+</svg>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Logo } from "@/components/Logo";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { corporateNav, individualNav } from "@/data/navigation";
 
@@ -10,13 +10,7 @@ export function Footer() {
     <footer className="border-t border-border bg-white">
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <Image
-            src="/images/logo/insureleague-logo.png"
-            alt="InsureLeague"
-            width={160}
-            height={50}
-            className="h-10 w-auto object-contain"
-          />
+          <Logo size="sm" />
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
             IRDAI-approved insurance marketing firm offering corporate and individual insurance
             advisory, risk management, and strategic protection solutions.
