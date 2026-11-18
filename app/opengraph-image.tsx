@@ -39,7 +39,7 @@ export default function OpengraphImage() {
           </div>
         </div>
         <div style={{ fontSize: 36, color: "#334155", marginTop: 56, lineHeight: 1.35 }}>
-          Corporate & individual insurance advisory · Bengaluru
+          IRDAI-Approved Insurance Advisory
         </div>
       </div>
     ),

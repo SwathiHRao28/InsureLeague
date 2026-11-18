@@ -11,8 +11,9 @@ export const BUSINESS = {
   name: "InsureLeague",
   legalName: "Infinite Basket Insurance Marketing P Ltd",
   slogan: "Securing Lives",
+  // Client-provided wording (same as the site's meta description) — do not rewrite.
   description:
-    "IRDAI-approved insurance marketing firm in Bengaluru offering corporate and individual insurance advisory — Keyman, D&O, cyber, employee benefits, term, health and retirement plans.",
+    "InsureLeague is an IRDAI-approved insurance marketing firm offering corporate and individual insurance advisory, risk management, and strategic protection solutions.",
   email: "info@insureleague.com",
   phones: ["+91-98452-31663", "+91-99006-00661", "+91-80-2356-0205"],
   address: {
